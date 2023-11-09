@@ -20,7 +20,7 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID todoId; //trying to avoid naming it simply "id"
 
-
+    
     private String name;
 
     private String description;

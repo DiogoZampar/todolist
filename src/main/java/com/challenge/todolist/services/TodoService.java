@@ -36,15 +36,18 @@ public class TodoService {
         return todoRepository.findAll(sort);
     }
 
-    
+
     public Todo findById(UUID id){
         return todoRepository.findById(id).orElse(null);
     }
 
 
 
-    public Todo updateById(Todo todo, UUID id){
+    public Todo update(Todo todo){
+        Todo originalTodo = findById(todo.getTodoId());
+        todo.setCreatedAt(originalTodo.getCreatedAt());
         todo.setUpdatedAt(LocalDateTime.now());
+
         Todo updatedTodo = todoRepository.save(todo);
         return updatedTodo;
     }
