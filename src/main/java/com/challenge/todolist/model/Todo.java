@@ -30,9 +30,10 @@ public class Todo {
     private boolean completed;
 
     private LocalDateTime completedAt;
+    
+    private LocalDateTime updatedAt;
 
     private Integer priority;
-
 
 
 
@@ -94,7 +95,14 @@ public class Todo {
         this.priority = priority;
     }
     
-    
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     @Override
     public int hashCode() {
