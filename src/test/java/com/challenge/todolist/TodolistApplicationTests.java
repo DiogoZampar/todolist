@@ -107,7 +107,37 @@ class TodolistApplicationTests {
 	}
 
 
+	@Test
+	void testPutTodoFailure() {
+		var createdTodo = new Todo("Todo name 1", "todo 1's description", false, 3);
+		createdTodo.setCreatedAt(LocalDateTime.now());
+		createdTodo = todoRepository.save(createdTodo);	//saving directly to repository to avoid another POST
+
+
+
+		//empty name
+		createdTodo.setName("");
+		webTestClient.put().uri("/todo").bodyValue(createdTodo).exchange()
+			.expectStatus().isBadRequest();
+		createdTodo.setName("Todo name 1");
+
+		//empty description
+		createdTodo.setDescription("");
+		webTestClient.post().uri("/todo").bodyValue(createdTodo).exchange()
+			.expectStatus().isBadRequest();
+		createdTodo.setDescription("todo 1's description");
+
+		//negative priority
+		createdTodo.setPriority(-2);
+		webTestClient.post().uri("/todo").bodyValue(new Todo("Todo name 1", "todo 1's description", false, -2)).exchange()
+			.expectStatus().isBadRequest();
+		createdTodo.setPriority(3);
+
+
+	}
 
 
 
 }
+
+

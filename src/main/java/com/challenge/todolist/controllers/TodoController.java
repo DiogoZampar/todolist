@@ -55,7 +55,7 @@ public class TodoController {
 
 
     @PutMapping
-    public ResponseEntity<Todo> updateTodo(@RequestBody Todo todo){
+    public ResponseEntity<Todo> updateTodo(@RequestBody @Valid Todo todo){
         Todo originalTodo = todoService.findById(todo.getTodoId()); //checking if original todo existed at all
         if(originalTodo == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
