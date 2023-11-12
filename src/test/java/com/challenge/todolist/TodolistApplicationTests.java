@@ -3,6 +3,7 @@ package com.challenge.todolist;
 
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ class TodolistApplicationTests {
 		todoRepository.save(createdTodo);	//saving directly to repository to avoid another POST
 
 
-		webTestClient.get().uri(new String("/todo/" + createdTodo.getTodoId().toString())).exchange()
+		webTestClient.get().uri("/todo/" + createdTodo.getTodoId().toString()).exchange()
 			.expectStatus().isOk()
 			.expectBody()
 			.jsonPath("$.todoId").isEqualTo(createdTodo.getTodoId().toString())
@@ -94,7 +95,7 @@ class TodolistApplicationTests {
 		createdTodo.setPriority(5);
 
 
-		webTestClient.put().uri(new String("/todo")).bodyValue(createdTodo).exchange()
+		webTestClient.put().uri("/todo").bodyValue(createdTodo).exchange()
 			.expectStatus().isOk()
 			.expectBody()
 			.jsonPath("$.name").isEqualTo(createdTodo.getName())
@@ -110,7 +111,6 @@ class TodolistApplicationTests {
 	@Test
 	void testPutTodoFailure() {
 		var createdTodo = new Todo("Todo name 1", "todo 1's description", false, 3);
-		createdTodo.setCreatedAt(LocalDateTime.now());
 		createdTodo = todoRepository.save(createdTodo);	//saving directly to repository to avoid another POST
 
 
@@ -137,6 +137,26 @@ class TodolistApplicationTests {
 	}
 
 
+
+	@Test
+	void testDeleteTodoSuccess(){
+		var createdTodo = new Todo("Todo name 1", "todo 1's description", false, 3);
+		createdTodo = todoRepository.save(createdTodo);	//saving directly to repository to avoid another POST
+
+		webTestClient.delete().uri("/todo/" + createdTodo.getTodoId().toString()).exchange()
+		.expectStatus().isOk();
+
+	}
+
+	@Test
+	void testDeleteTodoFailure(){
+		
+		//inexistent Todo UUID
+		webTestClient.delete().uri("/todo/" + UUID.randomUUID().toString()).exchange()
+		.expectStatus().isNotFound()
+		.expectBody().isEmpty();
+		
+	}
 
 }
 
