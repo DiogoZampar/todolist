@@ -21,7 +21,7 @@
 - REST API
 - Dependency Injection
 - Error message handling
-- Automatic Swagger by OpenAPI3
+- Automatic Swagger UI documentation by OpenAPI3
 
 
 ## Instructions
@@ -39,21 +39,21 @@ git clone https://github.com/DiogoZampar/todolist
 ```
 java -jar target/todolist-0.0.1-SNAPSHOT.jar
 ```
-- API can now be accessed at localhost:8080.
-
+- API can now be accessed at: https://localhost:8080.
+- Swagger UI at: http://localhost:8080/swagger-ui/index.html.
 
 ## Endpoints
 
 - ### GET https://localhost:8080/todo
-    Returns a complete list of Todos in application/json
+    Returns a complete list of Todos in JSON.
 
 
 - ### GET https://localhost:8080/todo/{id}
     Returns Todo with given UUID, if found.
 
 - ### POST https://localhost:8080/todo
-    
-    Expected request body(application/json):
+    Creates a Todo.
+
 ```
 {
     "name": "Todo 1",
@@ -66,7 +66,6 @@ java -jar target/todolist-0.0.1-SNAPSHOT.jar
 - ### PUT https://localhost:8080/todo
     Updates Todo with given UUID, if found.
     
-    Expected request body(application/json):
 ```
 {
     "todoId": "48894b5b-a9f4-4374-9da6-b9c152b6b75a",
